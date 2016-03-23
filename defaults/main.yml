@@ -1,4 +1,5 @@
 ---
 # defaults file for newrelic
 newrelic_image: "newrelic/nrsysmond:latest"
+newrelic_logfile: "/var/log/nrsysmond.log"
 newrelic_license_key: ''

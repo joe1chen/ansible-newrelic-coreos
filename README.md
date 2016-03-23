@@ -13,8 +13,11 @@ The variables that can be passed to this role and a brief description about them
     # License key
     newrelic_license_key: ab2fa361cd4d0d373833cad619d7bcc424d27c16
 
-    newrelic_image: "newrelic/nrsysmond:latest"
+    # Docker image
+    newrelic_image: newrelic/nrsysmond:latest
 
+    # Log file location
+    newrelic_logfile: /var/log/nrsysmond.log
 
 ## Examples
 
