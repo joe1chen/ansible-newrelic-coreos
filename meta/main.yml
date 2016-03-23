@@ -70,7 +70,7 @@ galaxy_info:
   #  - 9.2
   - name: CoreOS
     versions:
-  #  - all
+    - all
   #  - lucid
   #  - maverick
   #  - natty
