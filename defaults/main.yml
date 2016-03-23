@@ -1,5 +1,4 @@
 ---
 # defaults file for newrelic
-newrelic_version: 'latest'
-newrelic_image: "newrelic/nrsysmond:{{ newrelic_version }}"
-newrelic_key: ''
+newrelic_image: "newrelic/nrsysmond:latest"
+newrelic_license_key: ''
