@@ -1,0 +1,23 @@
+- name: deploy newrelic service
+  become: yes
+  become_user: root
+  template:
+    src: newrelic.service.j2
+    dest: /etc/systemd/system/newrelic.service
+  notify:
+    - reload systemd
+    - restart newrelic
+  tags:
+    - newrelic
+
+# Attach to the running container, or start it if needed
+# and forward all signals so that the process manager can detect
+# when a container stops and correctly restart it.
+- name: ensure newrelic is running (and enable it at boot)
+  become: yes
+  service:
+    name: newrelic
+    state: started
+    enabled: yes
+  tags:
+    - newrelic
