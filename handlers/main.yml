@@ -1,0 +1,13 @@
+---
+# handlers file for newrelic
+- name: reload systemd
+  become: yes
+  command: systemctl daemon-reload
+  notify:
+    - restart newrelic
+
+- name: restart newrelic
+  become: yes
+  service:
+   name: newrelic
+   state: restarted
