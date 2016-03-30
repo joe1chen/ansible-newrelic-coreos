@@ -1,15 +1,16 @@
 [Unit]
 Description=New Relic Server Monitoring
-Requires=docker.socket
-After=docker.socket
+Requires=docker.service
+After=docker.service
 
 [Service]
-ExecStartPre=/bin/sh -c "docker history {{ newrelic_image }} >/dev/null 2>&1 || docker pull {{ newrelic_image }}"
-ExecStartPre=/bin/sh -c "docker inspect nrsysmond >/dev/null 2>&1 && docker rm -f nrsysmond || true"
-ExecStart=/usr/bin/docker run -d --privileged=true --name nrsysmond --pid=host --net=host -v /sys:/sys -v /dev:/dev -v /var/run/docker.sock:/var/run/docker.sock -v /var/log:/var/log:rw -e NRSYSMOND_license_key={{ newrelic_license_key }} -e NRSYSMOND_logfile={{ newrelic_logfile }} {{ newrelic_image }}
-ExecStopPost=-/usr/bin/docker rm -f nrsysmond
+ExecStartPre=-/usr/bin/docker kill nrsysmond
+ExecStartPre=-/usr/bin/docker rm nrsysmond
+ExecStartPre=/usr/bin/docker pull {{ newrelic_image }}
+ExecStart=/usr/bin/docker run --privileged=true --name nrsysmond --pid=host --net=host -v /sys:/sys -v /dev:/dev -v /var/run/docker.sock:/var/run/docker.sock -v /var/log:/var/log:rw -e NRSYSMOND_license_key={{ newrelic_license_key }} -e NRSYSMOND_logfile={{ newrelic_logfile }} {{ newrelic_image }}
+ExecStop=/usr/bin/docker stop nrsysmond
 Restart=on-failure
-RestartSec=5
+TimeoutStartSec=0
 
 [Install]
 WantedBy=multi-user.target
